@@ -33,5 +33,17 @@ namespace Phonify.Controllers
             var phones = await _phoneService.GetFilteredPhonesAsync(vendors,brands,minPrice,maxPrice,sortBy);
             return Ok(phones);
         }
+        [HttpGet("/phones/brands")]
+        public async Task<ActionResult<List<string>>> GetBrands()
+        {
+            var brands = await _phoneService.GetDistinctBrandsAsync();
+            return Ok(brands);
+        }
+        [HttpGet("/phones/vendros")]
+        public async Task<ActionResult<List<string>>> GetVendors()
+        {
+            var vendors = await _phoneService.GetDistinctVendorsAsync();
+            return Ok(vendors);
+        }
     }
 }

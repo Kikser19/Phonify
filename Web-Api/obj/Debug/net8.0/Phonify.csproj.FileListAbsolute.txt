@@ -338,3 +338,4 @@ C:\Users\angel\OneDrive\Desktop\timsi - Copy\Web-Api\obj\Debug\net8.0\refint\Pho
 C:\Users\angel\OneDrive\Desktop\timsi - Copy\Web-Api\obj\Debug\net8.0\Phonify.pdb
 C:\Users\angel\OneDrive\Desktop\timsi - Copy\Web-Api\obj\Debug\net8.0\Phonify.genruntimeconfig.cache
 C:\Users\angel\OneDrive\Desktop\timsi - Copy\Web-Api\obj\Debug\net8.0\ref\Phonify.dll
+C:\Users\angel\OneDrive\Desktop\timsi - Copy\Web-Api\obj\Debug\net8.0\Phonify.sourcelink.json

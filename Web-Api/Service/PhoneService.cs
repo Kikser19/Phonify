@@ -23,5 +23,15 @@ namespace Phonify.Service
         {
             return await _repository.GetAllPhonesAsync();
         }
+
+        public Task<List<string>> GetDistinctBrandsAsync()
+        {
+            return _repository.GetDistinctBrandsAsync();
+        }
+
+        public Task<List<string>> GetDistinctVendorsAsync()
+        {
+            return _repository.GetDistinctVendorsAsync();
+        }
     }
 }

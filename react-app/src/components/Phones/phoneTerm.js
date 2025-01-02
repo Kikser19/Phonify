@@ -3,13 +3,30 @@ import React from 'react';
 const PhoneTerm = (props) => {
 
     function formatModelName(modelName) {
-        return modelName
+        var name = modelName
           .toLowerCase()
-          .replace(/\s+/g, '-'); // Replace spaces with dashes
+          .replace(/\s+/g, '-');
+        
+        if (name.startsWith("samsung")) {
+            return `${name}-5g`;
+        }
+        if (name.startsWith("iphone-14-pro-max") || name.startsWith("iphone-15-plus")) {
+            return `${name}-`;
+        }
+        if (name.startsWith("iphone-se")) {
+            return `${name}-2022`;
+        }
+        if (name.startsWith("rog-phone-6-batman-edition")) {
+            return name.replace('-edition', "")
+        }
+        if (name.startsWith("zenfone-10")) {
+            return name.replace('zenfone-10', "zenfone10")
+        }
+        return name;
     }
 
     // Format the model name for the image URL
-    const imageUrl = `https://fdn2.gsmarena.com/vv/bigpic/${props.term.brand}-${formatModelName(props.term.model)}.jpg`;
+    const imageUrl = `https://fdn2.gsmarena.com/vv/bigpic/${props.term.brand.toLowerCase()}-${formatModelName(props.term.model)}.jpg`;
     console.log(imageUrl)
     return (
         <div className="card">

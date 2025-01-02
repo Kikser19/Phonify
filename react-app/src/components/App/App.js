@@ -1,39 +1,59 @@
 import React, { useState, useEffect } from "react";
 import PhonesService from "../../repository/phones";
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Phones from "../Phones/phonesList";
+import Header from "../Header/header";
+import Aside from "../Aside/aside";
 
 const App = () => {
   const [phones, setPhones] = useState([]);
+  const [filters, setFilters] = useState({
+    vendors: [], // Selected vendors
+    brands: [],  // Selected brands
+    minPrice: null,
+    maxPrice: null,
+    sortBy: 'popular',
+  });
 
-  // Fetch the phones when the component mounts
   useEffect(() => {
-    loadPhones();
-  }, []); // Empty dependency array to run the effect once on mount
+    fetchFilteredPhones();
+  }, [filters]);
 
-  // Function to load phones from the API
-  const loadPhones = () => {
-    PhonesService.fetchPhones()
+  const fetchFilteredPhones = () => {
+    const { vendors, brands, minPrice, maxPrice, sortBy } = filters;
+
+    PhonesService.fetchFilteredPhones(vendors, brands, minPrice, maxPrice, sortBy)
       .then((response) => {
-        console.log("Response from API:", response);
-        // Assuming the data you want is in response.data
-        setPhones(response.data); // Update state with the fetched phones data
+        setPhones(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching phones:", error);
+        console.error("Error fetching filtered phones:", error);
       });
+  };
+
+  const handleFilterChange = (updatedFilters) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      ...updatedFilters,
+    }));
   };
 
   return (
     <div>
       <Router>
-        <main>
-          <div className={"container"}>
-            {<Routes>
-              <Route path={"/"} element={<Phones phones={phones} />} />
-            </Routes>}
+        <Header totalOffers={phones.length} />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3">
+              <Aside onFilterChange={handleFilterChange} />
+            </div>
+            <div className="col-md-9">
+              <Routes>
+                <Route path="/" element={<Phones phones={phones} />} />
+              </Routes>
+            </div>
           </div>
-        </main>
+        </div>
       </Router>
     </div>
   );

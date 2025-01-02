@@ -6,6 +6,9 @@ namespace Phonify.Repository
     {
         public Task<Phone> GetPhoneAsync(int id);
         public Task<List<Phone>> GetAllPhonesAsync();
+        public Task<List<string>> GetDistinctBrandsAsync();
+        public Task<List<string>> GetDistinctVendorsAsync();
+
         public Task<List<Phone>> GetFilteredPhonesAsync(
    List<string> vendors,
    List<string> brands,

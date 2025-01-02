@@ -72,5 +72,13 @@ namespace Phonify.Repository
             return await _context.Mobile.ToListAsync();
         }
 
+        public async Task<List<string>> GetDistinctBrandsAsync()
+        {
+            return await _context.Mobile.Select(p => p.Brand).Distinct().ToListAsync();
+        }
+        public async Task<List<string>> GetDistinctVendorsAsync()
+        {
+            return await _context.Mobile.Select(p => p.Vendor).Distinct().ToListAsync();
+        }
     }
 }
