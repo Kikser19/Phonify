@@ -1,19 +1,17 @@
 import React from "react";
 
-const SearchBar = ({ onSearcBarChange }) => {
-    const [searchTerm, setSearchTerm] = React.useState("");
-
-    const handleSearchChange = (text) => {
-        setSearchTerm(text);
-        onSearcBarChange(text); // Pass the updated text value directly
+const SearchBar = ({ onSearchBarChange }) => {
+    const handleChange = (e) => {
+        onSearchBarChange(e.target.value);
     };
 
     return (
-        <div>
+        <div className="mb-4">
             <input
                 type="text"
-                value={searchTerm} // Set the value of the input to the state
-                onChange={(event) => handleSearchChange(event.target.value)}
+                className="form-control"
+                placeholder="Search phones..."
+                onChange={handleChange}
             />
         </div>
     );

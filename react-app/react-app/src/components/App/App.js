@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import PhonesService from "../../repository/phones";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Phones from "../Phones/phonesList";
 import Header from "../Header/header";
 import Aside from "../Aside/aside";
+import PhonesService from "../../repository/phones";
 
 const App = () => {
   const [phones, setPhones] = useState([]);
   const [filters, setFilters] = useState({
-    vendors: [], // Selected vendors
-    brands: [],  // Selected brands
+    vendors: [],
+    brands: [],
     minPrice: null,
     maxPrice: null,
-    sortBy: 'popular',
+    sortBy: "popular",
+    phoneLength: 0,
   });
 
   useEffect(() => {
@@ -21,14 +22,15 @@ const App = () => {
 
   const fetchFilteredPhones = () => {
     const { vendors, brands, minPrice, maxPrice, sortBy } = filters;
-
     PhonesService.fetchFilteredPhones(vendors, brands, minPrice, maxPrice, sortBy)
-      .then((response) => {
-        setPhones(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching filtered phones:", error);
-      });
+        .then((response) => {
+          setPhones(response.data);
+          setFilters((prevFilters) => ({
+            ...prevFilters,
+            phoneLength: response.data.length,
+          }));
+        })
+        .catch((error) => console.error("Error fetching filtered phones:", error));
   };
 
   const handleFilterChange = (updatedFilters) => {
@@ -39,10 +41,8 @@ const App = () => {
   };
 
   return (
-    <div>
-      <div>{filters.vendors}</div>
       <Router>
-        <Header onFilterChange={handleFilterChange} totalOffers={phones.length} />
+        <Header onFilterChange={handleFilterChange} totalOffers={filters.phoneLength} />
         <div className="container">
           <div className="row">
             <div className="col-md-3">
@@ -50,13 +50,12 @@ const App = () => {
             </div>
             <div className="col-md-9">
               <Routes>
-                <Route path="/" element={<Phones phones={phones} />} />
+                <Route path="/" element={<Phones allPhones={phones} onFilterChange={handleFilterChange} />} />
               </Routes>
             </div>
           </div>
         </div>
       </Router>
-    </div>
   );
 };
 
