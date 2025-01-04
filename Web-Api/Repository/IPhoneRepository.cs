@@ -1,4 +1,5 @@
 ﻿using Phonify.Models;
+using Phonify.Models.Dto;
 
 namespace Phonify.Repository
 {
@@ -9,7 +10,7 @@ namespace Phonify.Repository
         public Task<List<string>> GetDistinctBrandsAsync();
         public Task<List<string>> GetDistinctVendorsAsync();
 
-        public Task<List<Phone>> GetFilteredPhonesAsync(
+        public Task<List<PhoneCardDto>> GetFilteredPhonesAsync(
    List<string> vendors,
    List<string> brands,
    decimal? minPrice,

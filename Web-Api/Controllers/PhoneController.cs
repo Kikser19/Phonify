@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Phonify.Service;
 using Phonify.Models;
+using Phonify.Models.Dto;
 namespace Phonify.Controllers
 {
     [Route("/[controller]")]
@@ -24,7 +25,7 @@ namespace Phonify.Controllers
             return Ok(phone);
         }
         [HttpGet("/phones/getFilteredPhones")]
-        public async Task<ActionResult<List<Phone>>> GetFilteredPhones([FromQuery] List<string> vendors,
+        public async Task<ActionResult<List<PhoneCardDto>>> GetFilteredPhones([FromQuery] List<string> vendors,
             [FromQuery] List<string> brands,
             [FromQuery] decimal? minPrice,
             [FromQuery] decimal? maxPrice,

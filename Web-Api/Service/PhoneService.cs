@@ -1,4 +1,5 @@
 ﻿using Phonify.Models;
+using Phonify.Models.Dto;
 using Phonify.Repository;
 
 namespace Phonify.Service
@@ -14,7 +15,7 @@ namespace Phonify.Service
         {
             return await _repository.GetPhoneAsync(id);
         }
-        public async Task<List<Phone>> GetFilteredPhonesAsync(List<string> vendors, List<string> brands, decimal? minPrice, decimal? maxPrice, string sortBy)
+        public async Task<List<PhoneCardDto>> GetFilteredPhonesAsync(List<string> vendors, List<string> brands, decimal? minPrice, decimal? maxPrice, string sortBy)
         {
             return await _repository.GetFilteredPhonesAsync(vendors,brands,minPrice,maxPrice,sortBy);
         }
