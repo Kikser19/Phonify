@@ -16,10 +16,18 @@ const Phones = ({ allPhones, onFilterChange }) => {
     }));
   };
 
-  const filteredPhones = allPhones.filter((phone) => {
-    const fullName = `${phone.brand} ${phone.model}`.toLowerCase();
-    return fullName.includes(searchTerm.toLowerCase());
-  });
+    const filteredPhones = allPhones
+        .filter((phone) => {
+            const fullName = `${phone.brand} ${phone.model}`.toLowerCase();
+            return fullName.includes(searchTerm.toLowerCase());
+        })
+        .reduce((uniquePhones, phone) => {
+            // Check if this brand + model combination already exists in uniquePhones
+            if (!uniquePhones.some(p => p.brand === phone.brand && p.model === phone.model)) {
+                uniquePhones.push(phone);
+            }
+            return uniquePhones;
+        }, []);
 
   const offset = page * size;
   const pageCount = Math.ceil(filteredPhones.length / size);
