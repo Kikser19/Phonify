@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Phonify")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5785c04a2ea860dc4e58bac7522f58176a7bb515")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07a1b3c7bfc9c4b760b63ee4455c21ce93692602")]
 [assembly: System.Reflection.AssemblyProductAttribute("Phonify")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Phonify")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

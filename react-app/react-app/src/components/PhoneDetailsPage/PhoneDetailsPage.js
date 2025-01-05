@@ -37,12 +37,15 @@ const PhoneDetailsPage = () => {
                         return (
                             <li key={index}>
                                 {offer.vendor && (
-                                    <div>
-                                        <img src={Images.getVendorImage(offer.vendor)} alt={offer.vendor} />
+                                    <div style={{display:"inline-block",width:"60px",height:"32px"}}>
+                                        <img src={Images.getVendorImage(offer.vendor)} alt={offer.vendor} style={{width:"100%",
+                                            height:"auto",
+                                            objectFit:"contain"}} />
                                     </div>
                                 )}
-                                Vendor: {offer.vendor}, Price: {offer.price}, Name: {offer.wholeName}
+                                <a href={offer.link}>{offer.wholeName}</a>
                             </li>
+
                         );
                     })}
                 </ul>

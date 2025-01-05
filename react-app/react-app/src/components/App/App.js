@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import Phones from "../Phones/phonesList";
 import Header from "../Header/header";
 import Aside from "../Aside/aside";
@@ -8,49 +8,57 @@ import PhoneDetailsPage from "../PhoneDetailsPage/PhoneDetailsPage";
 
 const App = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const [phones, setPhones] = useState([]);
+    const [phoneLength, setPhoneLength] = useState(0); // Separate state for phone length
     const [filters, setFilters] = useState({
         vendors: [],
         brands: [],
         minPrice: null,
         maxPrice: null,
         sortBy: "popular",
-        phoneLength: 0,
     });
 
-    useEffect(() => {
-        console.log("Filters have changed:", filters); // Log filters for debugging
-        fetchFilteredPhones();
-    }, [filters]); // Trigger data fetching whenever filters change
+    const debounceTimeout = useRef(null);
 
-    const fetchFilteredPhones = () => {
+    // Fetch phones based on filters
+    const fetchFilteredPhones = useCallback(() => {
         const { vendors, brands, minPrice, maxPrice, sortBy } = filters;
+
         PhonesService.fetchFilteredPhones(vendors, brands, minPrice, maxPrice, sortBy)
             .then((response) => {
-                console.log("Fetched Phones:", response.data); // Log fetched data for debugging
+                console.log("Fetched Phones:", response.data); // Debug fetched data
                 setPhones(response.data);
-                setFilters((prevFilters) => ({
-                    ...prevFilters,
-                    phoneLength: response.data.length,
-                }));
+                setPhoneLength(response.data.length); // Update phone length
             })
             .catch((error) => console.error("Error fetching filtered phones:", error));
-    };
+    }, [filters]);
 
+    // Trigger API calls when filters change (with debounce)
+    useEffect(() => {
+        if (debounceTimeout.current) {
+            clearTimeout(debounceTimeout.current);
+        }
+        debounceTimeout.current = setTimeout(() => {
+            console.log("Filters have changed:", filters); // Debug filter changes
+            fetchFilteredPhones();
+        }, 500); // Adjust debounce time as needed
+
+        return () => clearTimeout(debounceTimeout.current); // Cleanup on unmount
+    }, [filters, fetchFilteredPhones]);
+
+    // Handle filter updates
     const handleFilterChange = (updatedFilters) => {
-        navigate("/");
+        navigate("/"); // Navigate to the list page
         setFilters((prevFilters) => ({
             ...prevFilters,
             ...updatedFilters,
         }));
-        console.log("New filters set:", updatedFilters); // Log new filters to ensure they're being set correctly
-         // Navigate to the list page after updating filters
+        console.log("New filters set:", updatedFilters); // Debug updated filters
     };
 
     return (
         <div>
-            <Header onFilterChange={handleFilterChange} totalOffers={filters.phoneLength} />
+            <Header onFilterChange={handleFilterChange} totalOffers={phoneLength} />
             <div className="container">
                 <Routes>
                     <Route
