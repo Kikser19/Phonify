@@ -25,6 +25,9 @@ const PhonesService = {
     
         return axios.get(`/phones/getFilteredPhones?${params.toString()}`);
     },
+    fetchPhoneOffers: (brand="",model="") => {
+        return axios.get(`/phones/getOffersForPhone?brand=${brand}&model=${model}`);
+    },
 };
 
 export default PhonesService;

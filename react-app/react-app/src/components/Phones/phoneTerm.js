@@ -1,4 +1,7 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 const PhoneTerm = (props) => {
+    const navigate = useNavigate();
     function formatModelName(modelName) {
         var name = modelName.toLowerCase().replace(/\s+/g, '-');
         if (name.startsWith("samsung")) {
@@ -18,11 +21,13 @@ const PhoneTerm = (props) => {
         }
         return name;
     }
-
+    const handleCardClick = () => {
+        navigate(`/phone-details`, { state: { brand: props.term.brand, model: props.term.model,imageLink:imageUrl } });
+    };
     const imageUrl = `https://fdn2.gsmarena.com/vv/bigpic/${props.term.brand.toLowerCase()}-${formatModelName(props.term.model)}.jpg`;
 
     return (
-        <div className="card">
+        <div className="card" onClick={handleCardClick} style={{ cursor: "pointer" }}>
             <div className="card-body">
                 <img src={imageUrl} alt={`${props.term.brand} ${props.term.model}`} className="card-img-top" />
                 <h5 className="card-title">{props.term.brand} {props.term.model}</h5>
