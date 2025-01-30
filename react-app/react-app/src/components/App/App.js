@@ -5,6 +5,14 @@ import Header from "../Header/header";
 import Aside from "../Aside/aside";
 import PhonesService from "../../repository/phones";
 import PhoneDetailsPage from "../PhoneDetailsPage/PhoneDetailsPage";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import headerBackground from '../../vendorImages/header-background.jpg';
+import applePink from '../../vendorImages/applePink.webp'
+import appleWhite from '../../vendorImages/whiteTech.jpg'
+import pink from '../../vendorImages/pink.jpg'
+import planina from '../../vendorImages/planina.jpg'
+
 
 const App = () => {
     const navigate = useNavigate();
@@ -22,6 +30,7 @@ const App = () => {
 
     // Fetch phones based on filters
     const fetchFilteredPhones = useCallback(() => {
+
         const { vendors, brands, minPrice, maxPrice, sortBy } = filters;
 
         PhonesService.fetchFilteredPhones(vendors, brands, minPrice, maxPrice, sortBy)
@@ -57,18 +66,41 @@ const App = () => {
     };
 
     return (
-        <div>
+        <div  style={{ width: '100%', overflow: 'hidden' }}>
             <Header onFilterChange={handleFilterChange} totalOffers={phoneLength} />
-            <div className="container">
+            <div className="container-fluid" style={{ height: '100%' }}>
                 <Routes>
                     <Route
                         path="/"
                         element={
-                            <div className="row">
-                                <div className="col-md-3">
-                                    <Aside onFilterChange={handleFilterChange} />
+                                <div 
+                                className="row h-screen w-full bg-cover"
+                                style={{ 
+                                    backgroundImage: `url(${planina})`,
+                                    }}
+                                >
+                          
+                                <div
+                                    className="col-md-3"
+                                    style={{
+                                        // backgroundImage: `url(${headerBackground})`,
+                                        // backgroundSize: 'cover',
+                                        // backgroundPosition: 'center',
+                                        // backgroundRepeat: 'no-repeat',
+                                    }}
+                                >
+                                    <Aside onFilterChange={handleFilterChange}/>
                                 </div>
-                                <div className="col-md-9">
+                                <div
+                                    className="col-md-9"
+                                    style={{
+                                        // backgroundImage: `url(${applePink})`,
+                                        // backgroundSize: 'cover',
+                                        // backgroundPosition: 'center',
+                                        // backgroundRepeat: 'repeat',
+
+                                    }}
+                                >
                                     <Phones allPhones={phones} onFilterChange={handleFilterChange} />
                                 </div>
                             </div>

@@ -14,7 +14,6 @@ const Aside = ({ onFilterChange }) => {
   const [priceRange, setPriceRange] = useState([0, 200000]);
   const [sortBy, setSortBy] = useState("popular");
 
-
   useEffect(() => {
     const fetchBrands = async () => {
       try {
@@ -24,7 +23,6 @@ const Aside = ({ onFilterChange }) => {
         console.error("Error fetching brands:", error);
       }
     };
-
 
     const fetchVendors = async () => {
       try {
@@ -49,31 +47,81 @@ const Aside = ({ onFilterChange }) => {
     });
   }, [selectedBrands, selectedVendors, priceRange, sortBy]);
 
+  const asideStyles = {
+    borderRadius: "0.625rem", // 10px → rem
+    padding: "1.25rem", // 20px → rem
+    marginTop: "2vh", // 30px → viewport height
+    transition: "all 0.3s ease-in-out",
+  };
+
+  const contentStyles = {
+    backgroundColor: "rgba(255, 255, 255, 0.50)",
+    borderRadius: "0.625rem", // 10px → rem
+    padding: "1.25rem", // 20px → rem
+    boxShadow: "0 0.125rem 0.375rem rgba(0, 0, 0, 0.1)", // 2px 6px → rem
+  };
+
+  // Responsive styles using media queries
+  const responsiveStyles = `
+    @media (max-width: 1024px) {
+      .aside-container {
+        width: 100%;
+        margin-top: 1.5vh;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .aside-container {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+      .aside-content {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .aside-container {
+        width: 100%;
+        padding: 0.75rem;
+        margin-top: 1vh;
+      }
+      .aside-content {
+        padding: 0.75rem;
+        box-shadow: none;
+      }
+    }
+  `;
+
   return (
-    <aside>
-
-
-
-      <PriceSlider
-        minPrice={priceRange[0]}
-        maxPrice={priceRange[1]}
-        onPriceChange={(newRange) => setPriceRange(newRange)}
-      />
-      <BrandList
-        brands={brands}
-        selectedBrands={selectedBrands}
-        onBrandChange={setSelectedBrands}
-      />
-      <VendorList
-        vendors={vendors}
-        selectedVendors={selectedVendors}
-        onVendorChange={setSelectedVendors}
-      />
-      <SortBy
-        selectedSort={sortBy}
-        onSortChange={(newSort) => setSortBy(newSort)}
-      />
-    </aside>
+    <>
+      <style>{responsiveStyles}</style>
+      <aside className="aside-container" style={asideStyles}>
+        <div className="aside-content" style={contentStyles}>
+          <PriceSlider
+            minPrice={priceRange[0]}
+            maxPrice={priceRange[1]}
+            onPriceChange={(newRange) => setPriceRange(newRange)}
+          />
+          <BrandList
+            brands={brands}
+            selectedBrands={selectedBrands}
+            onBrandChange={setSelectedBrands}
+          />
+          <VendorList
+            vendors={vendors}
+            selectedVendors={selectedVendors}
+            onVendorChange={setSelectedVendors}
+          />
+          <SortBy
+            selectedSort={sortBy}
+            onSortChange={(newSort) => setSortBy(newSort)}
+          />
+        </div>
+      </aside>
+    </>
   );
 };
 

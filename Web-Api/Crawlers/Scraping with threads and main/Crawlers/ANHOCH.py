@@ -59,6 +59,13 @@ def scrape():
         match = cat_model_pattern.search(name)
         return match.group(0).strip() if match else name
 
+    def format_samsung_model(name):
+        # Ensure the model_name is a string before applying the replace
+        if isinstance(name, str):
+            # For Plus models (e.g., S23 Plus -> S23+)
+            name = re.sub(r'(\d{2})\s*Plus', r'\1+', name)
+        return name
+
     # Set up WebDriver
     driver = webdriver.Chrome()
 
@@ -146,6 +153,9 @@ def scrape():
                         model = re.split(rf'{first_number}.*', model, maxsplit=1)[0].strip() + f" {first_number}"
                 elif brand.lower() == "samsung":
                     model = extract_samsung_model(name)
+                    model = format_samsung_model(model)  # Apply formatting for Plus models
+                    # Remove standalone ' 5 ' (with spaces before and after) from the model
+                    # model = re.sub(r'(?<=\s)5', '', model)
                 elif brand.lower() == "xiaomi":
                     model = extract_xiaomi_model(name)
                 elif brand.lower() == "motorola":

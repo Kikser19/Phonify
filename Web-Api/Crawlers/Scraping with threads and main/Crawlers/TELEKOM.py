@@ -76,6 +76,17 @@ def scrape():
         name = re.sub(r'\s+\d+[\+\d]*$', '', name)
         return name.strip()
 
+    def standardize_model_name(model_name):
+        # Ensure the model_name is a string before applying replace
+        if isinstance(model_name, str):
+            # Convert 'Z Fold' models to have a space between 'Z Fold' and the number
+            model_name = re.sub(r'Z Fold(\d+)', r'Z Fold \1', model_name)
+            model_name = re.sub(r'Z Flip(\d+)', r'Z Flip \1', model_name)
+        else:
+            # Handle cases where model_name is not a string (e.g., float, None)
+            model_name = str(model_name)  # Convert to string if not already
+        return model_name
+
 
     try:
         button_Cookies = WebDriverWait(driver, 10).until(
@@ -204,6 +215,7 @@ def scrape():
                 model = model.replace('MI', 'Redmi')
                 if '9at' in name.lower():
                     model = model.replace('9A', '9AT')
+            model = standardize_model_name(model)
             phones_data.append([brand, model, name, price, manufacturer, phone_url])
         except NoSuchElementException:
             print("Name not found for a phone.")

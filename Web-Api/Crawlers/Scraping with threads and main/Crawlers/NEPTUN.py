@@ -53,6 +53,20 @@ def scrape():
             name = re.sub(rf'\s*{color}', '', name, flags=re.IGNORECASE)
         return name.strip()
 
+    def standardize_model_name(model_name):
+        if isinstance(model_name, str):
+            model_name = re.sub(r'\bS(\d{2})FE\b', r'S\1 FE', model_name, flags=re.IGNORECASE)
+
+            # Add "Z Fold" only if "Fold" is not already preceded by "Z"
+            model_name = re.sub(r'(?<!Z )Fold(\d+)', r'Z Fold \1', model_name)
+            model_name = re.sub(r'Z Fold(\d+)', r'Z Fold \1', model_name)
+
+            model_name = re.sub(r'(?<!Z )Flip(\d+)', r'Z Flip \1', model_name)
+        else:
+            # Handle cases where model_name is not a string (e.g., float, None)
+            model_name = str(model_name)  # Convert to string if not already
+        return model_name
+
 
     while True:
         url = base_url.format(page_number)
@@ -110,6 +124,7 @@ def scrape():
                 else:
                     model = np.nan
                 price = price.replace('.', '')
+                model = standardize_model_name(model)
                 product_data.append([brand, model, name, price, manufacturer, phone_url])
 
             except NoSuchElementException:

@@ -58,6 +58,10 @@ def scrape():
                 # Clean model name
                 cleaned_model = ' '.join([part.strip() for part in model.split() if not any(
                     keyword.lower() in part.strip().lower() for keyword in exclude_keywords1)])
+                cleaned_model = ' '.join([
+                    word for word in cleaned_model.split()
+                    if not (word.lower().endswith("gb") or word.lower().endswith("tb"))
+                ])
                 cleaned_model = cleaned_model.replace("Нови - Без кутија", "").strip()
                 if "samsung" in name.lower() and "galaxy" not in cleaned_model.lower():
                     cleaned_model = "Galaxy " + cleaned_model

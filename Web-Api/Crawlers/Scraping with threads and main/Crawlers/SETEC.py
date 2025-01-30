@@ -41,8 +41,10 @@ def scrape():
         r'onetouch\s+\d{4,6}', re.IGNORECASE
     )
     uniwa_model_pattern = re.compile(
-        r'UNIWA\s([A-Za-z]+\d{4})', re.IGNORECASE
+        r'UNIWA\s([A-Za-z0-9]+(?:\sFlip)?)', re.IGNORECASE
     )
+
+
     allcall_model_pattern = re.compile(
         r'AllCall\s+([A-Za-z]+)', re.IGNORECASE
     )
@@ -77,6 +79,21 @@ def scrape():
             else:
                 return np.nan
 
+    def standardize_model_name(model_name):
+        # Ensure the model_name is a string before applying replace
+        if isinstance(model_name, str):
+            # Standardize Galaxy Fold models
+            model_name = re.sub(r'Galaxy Fold (\d+)', r'Galaxy Z Fold \1', model_name)
+            # Standardize Z Fold models to have a space between 'Z Fold' and the number
+            model_name = re.sub(r'Z Fold(\d+)', r'Z Fold \1', model_name)
+            # Add space between number and 'FE' in models like S24FE to S24 FE
+            model_name = re.sub(r'(\d+)(FE)', r'\1 \2', model_name)
+            # Convert Flip 4, Flip 5, Flip 6 to Z Flip 4, Z Flip 5, Z Flip 6
+            model_name = re.sub(r'Flip (\d)', r'Z Flip \1', model_name)
+        else:
+            # Handle cases where model_name is not a string (e.g., float, None)
+            model_name = str(model_name)  # Convert to string if not already
+        return model_name
 
     while True:
         url = base_url + '?page=' + str(page_number)
@@ -122,6 +139,7 @@ def scrape():
             brand = parts[0] if len(parts) > 0 else np.nan
             if brand.lower() == "samsung":
                 model = clean_samsung_model_name(product_name)
+                # model=product_name
             elif brand.lower() == "apple":
                 model_part = product_name.replace(brand, "").strip()
                 model = re.split(memory_color_pattern, model_part, maxsplit=1)[0].strip()
@@ -153,7 +171,10 @@ def scrape():
                 model = match.group(0).replace("tcl", "").strip() if match else np.nan
             elif brand.lower() == "uniwa":
                 match = uniwa_model_pattern.search(product_name)
-                model = match.group(1).strip() if match else np.nan
+                if match:
+                    model = match.group(1).strip()
+                else:
+                    model = np.nan
             elif brand.lower() == "allcall":
                 match = allcall_model_pattern.search(product_name)
                 model = match.group(1).strip() if match else np.nan
@@ -174,6 +195,7 @@ def scrape():
                 model = match.group(1).strip() if match else np.nan
             else:
                 model = np.nan
+            model = standardize_model_name(model)
 
             product_data.append([brand, model, product_name, regular_price, manufacturer, phone_link])
 
