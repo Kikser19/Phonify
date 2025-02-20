@@ -6,13 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PhoneDetailsPage = () => {
     const location = useLocation();
-    const { brand, model, imageLink } = location.state; // Get brand and model from navigation state
+    const { brand, model, imageLink } = location.state; 
     const [offers, setOffers] = useState([]);
 
     useEffect(() => {
         console.log(brand);
         console.log(model);
-        // Fetch phone offers from the backend
         const fetchOffers = async () => {
             try {
                 const response = await PhonesService.fetchPhoneOffers(brand, model);
@@ -49,7 +48,6 @@ const PhoneDetailsPage = () => {
                 {offers.length > 0 ? (
                     <ul className="list-group">
                         {offers.map((offer, index) => {
-                            // Apply alternating background colors
                             const backgroundColor = index % 2 === 0 ? "#fff" : "#f7f7f7";
                             return (
                                 <li
@@ -57,9 +55,9 @@ const PhoneDetailsPage = () => {
                                     className="list-group-item d-flex align-items-center py-2 px-3"
                                     style={{
                                         backgroundColor: backgroundColor,
-                                        borderRadius: "8px", // Even more subtle rounded corners
-                                        marginBottom: "10px", // Smaller margin
-                                        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.08)", // Thinner shadow
+                                        borderRadius: "8px", 
+                                        marginBottom: "10px", 
+                                        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.08)", 
                                         transition: "all 0.3s ease",
                                     }}
                                 >
@@ -71,7 +69,7 @@ const PhoneDetailsPage = () => {
                                                 alt={offer.vendor}
                                                 style={{
                                                     width: "100%",
-                                                    height: "auto",
+                                                    height: "100%",
                                                     objectFit: "contain",
                                                     transition: "transform 0.3s ease",
                                                 }}

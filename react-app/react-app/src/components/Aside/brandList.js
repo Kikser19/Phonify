@@ -11,20 +11,20 @@ const BrandList = ({ brands, selectedBrands, onBrandChange }) => {
     }
   };
 
-  const visibleBrands = isExpanded ? brands : brands.slice(0, 5); // Show only 5 brands initially
+  const visibleBrands = isExpanded ? brands : brands.slice(0, 5); 
 
-  // Styles for the brand list container
+  
   const containerStyles = {
     padding: "1rem",
-    border: "0.1rem solid #ddd", // Light gray border
+    border: "0.1rem solid #ddd", 
     borderRadius: "0.5rem",
     marginTop: "1rem",
     backgroundColor: "#f9f9f9",
-    boxShadow: "0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)", // Soft shadow
+    boxShadow: "0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)", 
     transition: "all 0.3s ease-in-out",
   };
 
-  // Responsive styles inside a `<style>` tag
+  
   const responsiveStyles = `
     @media (max-width: 1024px) {
       .brand-container {
@@ -38,7 +38,7 @@ const BrandList = ({ brands, selectedBrands, onBrandChange }) => {
         margin-top: 0.5rem;
       }
       .brand-title {
-        font-size: 1rem; // Adjust font size for smaller screens
+        font-size: 1rem; 
       }
       .brand-label {
         font-size: 0.9rem;
@@ -55,7 +55,7 @@ const BrandList = ({ brands, selectedBrands, onBrandChange }) => {
         box-shadow: none;
       }
       .brand-checkbox {
-        transform: scale(1); // Reset checkbox size on mobile
+        transform: scale(1); 
       }
     }
   `;

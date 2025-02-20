@@ -14,7 +14,7 @@ def main():
     # Database connection
     database_url = "mssql+pyodbc:///?odbc_connect={}".format(urllib.parse.quote_plus(
         "Driver={ODBC Driver 17 for SQL Server};"
-        "Server=MILKOS-LAPTOP;"
+        "Server=ETEREO\SQLEXPRESS;"
         "Database=Phonify;"
         "Trusted_Connection=yes;"
     ))

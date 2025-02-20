@@ -37,7 +37,7 @@ const VendorList = ({ vendors, selectedVendors, onVendorChange }) => {
             display: "flex",
             alignItems: "center",
             marginBottom: "0.75rem",
-            flexDirection: "row", // Default row layout
+            flexDirection: "row", 
           }}
         >
           <input

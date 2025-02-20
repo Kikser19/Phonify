@@ -6,7 +6,7 @@ const SearchBar = ({ onSearchBarChange }) => {
     };
 
     return (
-        <div className="mb-4">
+        <div className="mb-4" style={{width: "50%", margin:"auto"}}>
             <input
                 type="text"
                 className="form-control"

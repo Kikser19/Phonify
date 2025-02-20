@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const headerBackground = '/vendorImages/headerBackground.avif';
-
 const Header = ({ onFilterChange, totalOffers }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -13,18 +11,20 @@ const Header = ({ onFilterChange, totalOffers }) => {
         year: "numeric",
     });
 
-    const brands = ["Xiaomi", "Samsung", "Apple", "Poco", "Huawei", "Motorola", "OnePlus", "Honor"];
+    
+
+    const brands = ["Xiaomi", "Samsung", "Apple", "Huawei", "Motorola", "OnePlus", "Honor"];
     
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isMobileView, setIsMobileView] = useState(false);
 
     useEffect(() => {
         const updateView = () => {
-            setIsMobileView(window.innerWidth <= 768); // Adjust threshold as needed
+            setIsMobileView(window.innerWidth <= 768); 
         };
 
         window.addEventListener('resize', updateView);
-        updateView(); // Initialize view on mount
+        updateView(); 
 
         return () => {
             window.removeEventListener('resize', updateView);
@@ -38,7 +38,6 @@ const Header = ({ onFilterChange, totalOffers }) => {
     };
 
     const handleLogoClick = () => {
-        onFilterChange({ brands: [] });
         navigate("/");
     };
 
@@ -53,32 +52,25 @@ const Header = ({ onFilterChange, totalOffers }) => {
     };
 
     return (
-        <header
-            style={{
-                backgroundImage: `url(${headerBackground})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                height: '200px', // Reduced height
-                borderBottom: '5px solid #f0f0f0', // Softer light color
-                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                marginBottom: '0', // Ensure no white gap below
-            }}
-        >
+        <header style={{
+           // backgroundColor: "rgba(9,32,63,1)"
+            backgroundColor: "#003135"
+        }}>
             <div
                 className="container py-3 px-4"
                 style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.8)",
+                    //backgroundColor: "rgba(9,32,63,1)",
+                    backgroundColor: "#003135",
                     borderRadius: "8px",
-                    wordWrap: "break-word", // Prevents text from overflowing
+                    wordWrap: "break-word", 
                 }}
             >
                 <div className="row">
                     <div className="col-12 d-flex justify-content-between align-items-center">
-                        <span className="text-dark fs-6" style={{ color: "#333" }}>
+                        <span style={{ color: "white" }}>
                             Вкупно: <strong>{totalOffers}</strong> понуди
                         </span>
-                        <span className="text-dark fs-6" style={{ color: "#333" }}>
+                        <span style={{ color: "white" }}>
                             Обновено: <strong>{currentDate}</strong>
                         </span>
                     </div>
@@ -91,10 +83,10 @@ const Header = ({ onFilterChange, totalOffers }) => {
                                 cursor: "pointer",
                                 fontFamily: "'Roboto', sans-serif",
                                 letterSpacing: "1px",
-                                textShadow: "1px 1px 5px rgba(0, 0, 0, 0.1)",
                                 transition: "transform 0.3s ease",
-                                marginBottom: "10px", // Tighten spacing
-                                fontSize: isMobileView ? "2rem" : "3rem", // Adjust font size based on screen size
+                                marginBottom: "15px", 
+                                fontSize: isMobileView ? "2rem" : "3rem", 
+                                color: "white"
                             }}
                             onClick={handleLogoClick}
                             onMouseOver={(e) => e.target.style.transform = "scale(1.05)"}
@@ -114,7 +106,7 @@ const Header = ({ onFilterChange, totalOffers }) => {
                                         onClick={handlePrev}
                                         style={{
                                             backgroundColor: "transparent",
-                                            color: "#212529",
+                                            color: "white",
                                             border: '2px solid #f0f0f0',
                                             borderRadius: "50%",
                                             fontWeight: "500",
@@ -134,7 +126,7 @@ const Header = ({ onFilterChange, totalOffers }) => {
                                             onClick={() => handleFilterChange(brand)}
                                             style={{
                                                 backgroundColor: "transparent",
-                                                color: "#212529",
+                                                color: "white",
                                                 border: '2px solid #f0f0f0',
                                                 borderRadius: "20px",
                                                 fontWeight: "500",
@@ -161,7 +153,7 @@ const Header = ({ onFilterChange, totalOffers }) => {
                                         onClick={handleNext}
                                         style={{
                                             backgroundColor: "transparent",
-                                            color: "#212529",
+                                            color: "white",
                                             border: '2px solid #f0f0f0',
                                             borderRadius: "50%",
                                             fontWeight: "500",
@@ -175,7 +167,6 @@ const Header = ({ onFilterChange, totalOffers }) => {
                                     </button>
                                 </div>
                             ) : (
-                                // Show all brands inline if space allows
                                 <div className="d-flex justify-content-center flex-wrap">
                                     {brands.map((brand) => (
                                         <button
@@ -184,7 +175,7 @@ const Header = ({ onFilterChange, totalOffers }) => {
                                             onClick={() => handleFilterChange(brand)}
                                             style={{
                                                 backgroundColor: "transparent",
-                                                color: "#212529",
+                                                color: "white",
                                                 border: '2px solid #f0f0f0',
                                                 borderRadius: "20px",
                                                 fontWeight: "500",
@@ -194,7 +185,7 @@ const Header = ({ onFilterChange, totalOffers }) => {
                                                 boxShadow: "0 2px 5px rgba(0, 0, 0, 0.05)",
                                             }}
                                             onMouseOver={(e) => {
-                                                e.target.style.backgroundColor = "#f0f0f0";
+                                                e.target.style.backgroundColor = "rgba(255, 255, 255, 0.66)";
                                                 e.target.style.transform = "scale(1.05)";
                                             }}
                                             onMouseOut={(e) => {

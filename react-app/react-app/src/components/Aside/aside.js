@@ -12,7 +12,7 @@ const Aside = ({ onFilterChange }) => {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedVendors, setSelectedVendors] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 200000]);
-  const [sortBy, setSortBy] = useState("popular");
+  const [sortBy, setSortBy] = useState("price_desc");
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -46,22 +46,22 @@ const Aside = ({ onFilterChange }) => {
       sortBy: sortBy,
     });
   }, [selectedBrands, selectedVendors, priceRange, sortBy]);
+  
 
   const asideStyles = {
-    borderRadius: "0.625rem", // 10px → rem
-    padding: "1.25rem", // 20px → rem
-    marginTop: "2vh", // 30px → viewport height
+    borderRadius: "0.625rem", 
+    padding: "1.25rem", 
+    marginTop: "2vh", 
     transition: "all 0.3s ease-in-out",
   };
 
   const contentStyles = {
-    backgroundColor: "rgba(255, 255, 255, 0.50)",
-    borderRadius: "0.625rem", // 10px → rem
-    padding: "1.25rem", // 20px → rem
-    boxShadow: "0 0.125rem 0.375rem rgba(0, 0, 0, 0.1)", // 2px 6px → rem
+    borderRadius: "0.625rem", 
+    padding: "15px", 
+    boxShadow: "0 0.125rem 0.375rem rgb(255, 255, 255)", 
   };
 
-  // Responsive styles using media queries
+  
   const responsiveStyles = `
     @media (max-width: 1024px) {
       .aside-container {
